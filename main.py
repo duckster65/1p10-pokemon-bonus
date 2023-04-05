@@ -14,10 +14,16 @@ def retreive_pokemon(target_pokemon, level):
         line_num = 1
 
         for row in csv_reader:
-            print("checking: " + row[1])
             if row[1] == target_pokemon:
-                print("value found")
-                HP = 0.020 * math.sqrt(level) * row[5]
+                #HP = 0.020 * math.sqrt(level) * int(row[5])
+
+                EV = 0
+
+                for i in range(5):
+                    EV += int(row[6 + i])
+
+                HP = math.floor(0.01 * (2 * int(row[5]) + 6 + math.floor(0.25 * EV)) * level) + level + 10
+
                 temp_pokemon = Pokemon(target_pokemon, row[2], HP)
                 return temp_pokemon
             
@@ -40,29 +46,31 @@ def main():
 def gym_battle():
     global team
     leaders_team = []
-    choice = input("Which gym leader do you want to fight:\n1. Brock")
+    choice = input("Which gym leader do you want to fight:\n1. Brock\n")
     if choice == "1":
-        print("You have chosen to fight Brock!")
+        print("\nYou have chosen to fight Brock!")
         leaders_team.append(retreive_pokemon("Geodude", 12))
         leaders_team.append(retreive_pokemon("Onix", 14))
 
         current_pokemon = ""
 
         while True: 
-            choice = input("Which pokemon would you like to send out first:")
-            for pokemon in team:
-                print((i+1),pokemon.name, str(pokemon.HP))
+            print("\n")
+            for i in range(len(team)):
+                pokemon = team[i]
+                print((str((i+1))+ "."), pokemon.name, str(pokemon.HP), "HP")
 
             choice = input("Which pokemon would you like to send out first?: ")
             
             try:
-                current_pokemon = team[choice]
+                current_pokemon = team[int(choice)]
                 break
 
-            except:
+            except Exception as e:
                 continue
 
         while alive > 0:
+            print("test")
 
 def start():
     global team
