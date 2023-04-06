@@ -1,10 +1,10 @@
 class Pokemon:
 
-     def __init__(self, name, typ, hp):
+     def __init__(self, name, typ, hp, stats):
           self.name = name
           self.type = typ
           self.CP = 0
-          self.stats = [0, 0, 0] ## [attack, defense, stamina] - max 15
+          self.stats = stats ## [attack, defense, stamina] - max 15
           self.IV = 0
           self.HP = hp
           self.maxHP = hp
